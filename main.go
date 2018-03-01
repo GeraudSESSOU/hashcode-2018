@@ -79,6 +79,9 @@ type Car struct {
 
 func (c *Car) Update(r *Ride) {
 	c.moveTo(r.a, r.b)
+	if c.Arrival < r.s {
+		c.Arrival = r.s
+	}
 	c.moveTo(r.x, r.y)
 	c.Rides = append(c.Rides, r.ID)
 }
