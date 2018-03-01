@@ -64,7 +64,14 @@ func (c *Car) moveTo(x, y int) {
 	c.Y = y
 }
 
-func Choose(c *Car) *Ride { return nil }
+func Choose(c *Car) *Ride {
+	for _, r := range Rides {
+		if !r.used {
+			return r
+		}
+	}
+	return nil
+}
 
 func assign() bool {
 	c := Sched.Pop()
