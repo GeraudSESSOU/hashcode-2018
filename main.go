@@ -114,9 +114,9 @@ func (c *Car) distanceTo(x, y int) int {
 }
 
 func Choose(c *Car) *Ride {
-	bestRide := Rides[0]
-	bestLenOfRide := Rides[0].length()
-	bestTotal := c.distanceTo(Rides[0].a, Rides[0].b) + bestLenOfRide
+	var bestRide *Ride
+	bestLenOfRide := 0
+	bestTotal := 0
 	for _, r := range Rides[1:] {
 		if r.used {
 			continue
@@ -126,12 +126,11 @@ func Choose(c *Car) *Ride {
 		}
 		lenOfRide := r.length()
 		total := c.distanceTo(r.a, r.b) + lenOfRide
-		if lenOfRide*bestTotal < total*bestLenOfRide {
+		if bestRide == nil || lenOfRide*bestTotal < total*bestLenOfRide {
 			bestLenOfRide = lenOfRide
 			bestTotal = total
 			bestRide = r
 		}
-		return r
 	}
 	return bestRide
 }
