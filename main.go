@@ -15,7 +15,7 @@ var N int
 var B int
 var T int
 
-var Rides []Ride
+var Rides []*Ride
 
 var Cars []*Car
 
@@ -23,6 +23,8 @@ var Sched Scheduler
 
 type Ride struct {
 	a, b, x, y, s, f int
+
+	used bool
 }
 
 type Scheduler interface {
@@ -39,15 +41,28 @@ type Car struct {
 	Y       int
 }
 
+func (c *Car) Update(r *Ride) {}
+
+func Choose(c *Car) *Ride { return nil }
+
 func assign() bool {
-	c := sched.Pop()
+	c := Sched.Pop()
+	if c == nil {
+		return false
+	}
 	r := Choose(c)
+	if r == nil {
+		return true
+	}
+	r.used = true
 	c.Update(r)
-	sched.Add(c)
+	Sched.Add(c)
+
+	return true
 }
 
 func solve() {
-	Sched = prioq{}
+	Sched = &prioq{}
 
 	// create cars
 	for i := 0; i < F; i++ {
@@ -93,7 +108,7 @@ func main() {
 	T = readInt()
 
 	for i := 0; i < N; i++ {
-		Rides = append(Rides, Ride{
+		Rides = append(Rides, &Ride{
 			a: readInt(),
 			b: readInt(),
 			x: readInt(),
