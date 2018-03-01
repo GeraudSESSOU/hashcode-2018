@@ -79,7 +79,13 @@ func solve() {
 	for assign() {
 	}
 
-	fmt.Fprintf(output, "%d\n", C)
+	for _, c := range Cars {
+		fmt.Fprintf(output, "%d", len(c.Rides))
+		for _, ri := range c.Rides {
+			fmt.Fprintf(output, " %d", ri)
+		}
+		fmt.Fprintf(output, "\n")
+	}
 }
 
 func main() {
