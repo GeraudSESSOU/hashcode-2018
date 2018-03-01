@@ -92,8 +92,11 @@ func (c *Car) EarliestFinish(r *Ride) int {
 		X:       c.X,
 		Y:       c.Y,
 	}
-	c.moveTo(r.a, r.b)
-	c.moveTo(r.x, r.y)
+	copy.moveTo(r.a, r.b)
+	if copy.Arrival < r.s {
+		copy.Arrival = r.s
+	}
+	copy.moveTo(r.x, r.y)
 	return copy.Arrival
 }
 
