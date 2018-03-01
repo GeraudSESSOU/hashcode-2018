@@ -58,6 +58,17 @@ func (c *Car) Update(r *Ride) {
 	c.Rides = append(c.Rides, r.ID)
 }
 
+func (c *Car) EarliestFinish(r *Ride) int {
+	copy := &Car{
+		Arrival: c.Arrival,
+		X:       c.X,
+		Y:       c.Y,
+	}
+	c.moveTo(r.a, r.b)
+	c.moveTo(r.x, r.y)
+	return copy.Arrival
+}
+
 func (c *Car) moveTo(x, y int) {
 	xdist := c.X - x
 	if xdist < 0 {
@@ -75,9 +86,13 @@ func (c *Car) moveTo(x, y int) {
 
 func Choose(c *Car) *Ride {
 	for _, r := range Rides {
-		if !r.used {
-			return r
+		if r.used {
+			continue
 		}
+		if r.f < c.EarliestFinish(r) {
+			continue
+		}
+		return r
 	}
 	return nil
 }
