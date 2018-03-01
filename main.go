@@ -43,6 +43,18 @@ func (r Ride) Length() int {
 	return xdist + ydist
 }
 
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	} else {
+		return x
+	}
+}
+
+func (r *Ride) length() int {
+	return abs(r.a-r.x) + abs(r.b-r.y)
+}
+
 type ByEndtime []*Ride
 
 func (rs ByEndtime) Len() int      { return len(rs) }
@@ -97,17 +109,31 @@ func (c *Car) moveTo(x, y int) {
 	c.Y = y
 }
 
+func (c *Car) distanceTo(x, y int) int {
+	return abs(c.X-x) + abs(c.Y-y)
+}
+
 func Choose(c *Car) *Ride {
-	for _, r := range Rides {
+	bestRide := Rides[0]
+	bestLenOfRide := Rides[0].length()
+	bestTotal := c.distanceTo(Rides[0].a, Rides[0].b) + bestLenOfRide
+	for _, r := range Rides[1:] {
 		if r.used {
 			continue
 		}
 		if r.f < c.EarliestFinish(r) {
 			continue
 		}
+		lenOfRide := r.length()
+		total := c.distanceTo(r.a, r.b) + lenOfRide
+		if lenOfRide*bestTotal < total*bestLenOfRide {
+			bestLenOfRide = lenOfRide
+			bestTotal = total
+			bestRide = r
+		}
 		return r
 	}
-	return nil
+	return bestRide
 }
 
 func assign() bool {
