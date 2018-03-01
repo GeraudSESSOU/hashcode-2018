@@ -116,25 +116,39 @@ func (c *Car) distanceTo(x, y int) int {
 	return abs(c.X-x) + abs(c.Y-y)
 }
 
+func max(a, b int) int {
+	if a > b {
+		return a
+	} else {
+		return b
+	}
+}
+
 func Choose(c *Car) *Ride {
 	var bestRide *Ride
 	bestLenOfRide := 0
 	bestTotal := 0
-	for _, r := range Rides[1:] {
+	// fmt.Printf("car %d\n", c.ID)
+	for _, r := range Rides {
 		if r.used {
 			continue
 		}
-		if r.f < c.EarliestFinish(r) {
-			continue
-		}
+		// if r.f < c.EarliestFinish(r) {
+		// 	continue
+		// }
+		// fmt.Printf("%d %d -> %d %d\n", r.a, r.b, r.x, r.y)
 		lenOfRide := r.length()
-		total := c.distanceTo(r.a, r.b) + lenOfRide
-		if bestRide == nil || lenOfRide*bestTotal < total*bestLenOfRide {
+		total := max(c.distanceTo(r.a, r.b), r.s-c.Arrival) + lenOfRide
+		// fmt.Printf("%d/%d\n", lenOfRide, total)
+		if bestRide == nil || lenOfRide*bestTotal > total*bestLenOfRide {
 			bestLenOfRide = lenOfRide
 			bestTotal = total
 			bestRide = r
 		}
 	}
+	// if bestRide != nil {
+	// 	fmt.Printf("Picking %d %d -> %d %d\n", bestRide.a, bestRide.b, bestRide.x, bestRide.y)
+	// }
 	return bestRide
 }
 
