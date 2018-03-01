@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 )
 
 var input *os.File
@@ -27,6 +28,14 @@ type Ride struct {
 	a, b, x, y, s, f int
 
 	used bool
+}
+
+type ByEndtime []*Ride
+
+func (rs ByEndtime) Len() int      { return len(rs) }
+func (rs ByEndtime) Swap(i, j int) { rs[i], rs[j] = rs[j], rs[i] }
+func (rs ByEndtime) Less(i, j int) bool {
+	return rs[i].f < rs[j].f
 }
 
 type Scheduler interface {
@@ -65,6 +74,8 @@ func (c *Car) moveTo(x, y int) {
 }
 
 func Choose(c *Car) *Ride {
+	sort.Sort(ByEndtime(Rides))
+
 	for _, r := range Rides {
 		if !r.used {
 			return r
