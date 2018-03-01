@@ -22,6 +22,8 @@ var Cars []*Car
 var Sched Scheduler
 
 type Ride struct {
+	ID int
+
 	a, b, x, y, s, f int
 
 	used bool
@@ -41,7 +43,26 @@ type Car struct {
 	Y       int
 }
 
-func (c *Car) Update(r *Ride) {}
+func (c *Car) Update(r *Ride) {
+	c.moveTo(r.a, r.b)
+	c.moveTo(r.x, r.y)
+	c.Rides = append(c.Rides, r.ID)
+}
+
+func (c *Car) moveTo(x, y int) {
+	xdist := c.X - x
+	if xdist < 0 {
+		xdist = -xdist
+	}
+	ydist := c.Y - y
+	if ydist < 0 {
+		ydist = -ydist
+	}
+
+	c.Arrival += xdist + ydist
+	c.X = x
+	c.Y = y
+}
 
 func Choose(c *Car) *Ride { return nil }
 
@@ -115,12 +136,13 @@ func main() {
 
 	for i := 0; i < N; i++ {
 		Rides = append(Rides, &Ride{
-			a: readInt(),
-			b: readInt(),
-			x: readInt(),
-			y: readInt(),
-			s: readInt(),
-			f: readInt(),
+			ID: i,
+			a:  readInt(),
+			b:  readInt(),
+			x:  readInt(),
+			y:  readInt(),
+			s:  readInt(),
+			f:  readInt(),
 		})
 	}
 
