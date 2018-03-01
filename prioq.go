@@ -21,7 +21,7 @@ func (pq *prioq) Add(car *Car) {
 
 func (pq *prioq) Pop() *Car {
 	if len(pq.bintree) == 0 {
-		panic("Trying to remove from empty queue")
+		return nil
 	}
 
 	if len(pq.bintree) == 1 {
