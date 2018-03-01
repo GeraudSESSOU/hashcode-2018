@@ -74,8 +74,6 @@ func (c *Car) moveTo(x, y int) {
 }
 
 func Choose(c *Car) *Ride {
-	sort.Sort(ByEndtime(Rides))
-
 	for _, r := range Rides {
 		if !r.used {
 			return r
@@ -101,6 +99,8 @@ func assign() bool {
 }
 
 func solve() {
+	sort.Sort(ByEndtime(Rides))
+
 	Sched = &prioq{}
 
 	// create cars
