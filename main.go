@@ -30,6 +30,19 @@ type Ride struct {
 	used bool
 }
 
+func (r Ride) Length() int {
+	xdist := r.a - r.x
+	if xdist < 0 {
+		xdist = -xdist
+	}
+	ydist := r.b - r.y
+	if ydist < 0 {
+		ydist = -ydist
+	}
+
+	return xdist + ydist
+}
+
 type ByEndtime []*Ride
 
 func (rs ByEndtime) Len() int      { return len(rs) }
