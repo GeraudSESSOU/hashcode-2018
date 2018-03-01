@@ -3,10 +3,10 @@ package main
 // Invariant: both children are bigger
 
 type prioq struct {
-	bintree []Car
+	bintree []*Car
 }
 
-func (pq *prioq) Add(car Car) {
+func (pq *prioq) Add(car *Car) {
 	pq.bintree = append(pq.bintree, car)
 
 	// Rebalance tree to respect invariant
@@ -19,7 +19,7 @@ func (pq *prioq) Add(car Car) {
 	}
 }
 
-func (pq *prioq) pop() Car {
+func (pq *prioq) pop() *Car {
 	if len(pq.bintree) == 0 {
 		panic("Trying to remove from empty queue")
 	}

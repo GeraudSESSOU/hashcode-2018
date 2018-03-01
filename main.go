@@ -26,8 +26,8 @@ type Ride struct {
 }
 
 type Scheduler interface {
-	Add(Car)
-	Pop() Car
+	Add(*Car)
+	Pop() *Car
 }
 
 type Car struct {
