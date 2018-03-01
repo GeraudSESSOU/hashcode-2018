@@ -136,9 +136,12 @@ func Choose(c *Car) *Ride {
 		if r.used {
 			continue
 		}
-		// if r.f < c.EarliestFinish(r) {
-		// 	continue
-		// }
+		if r.Length() > 6000 {
+			continue
+		}
+		if r.f < c.EarliestFinish(r) {
+			continue
+		}
 		// fmt.Printf("%d %d -> %d %d\n", r.a, r.b, r.x, r.y)
 		lenOfRide := r.length()
 		total := max(c.distanceTo(r.a, r.b), r.s-c.Arrival) + lenOfRide
