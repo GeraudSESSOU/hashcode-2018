@@ -12,6 +12,20 @@ var A int
 var B int
 var C int
 
+type Scheduler interface {
+	Add(Car)
+	Pop() Car
+}
+
+type Car struct {
+	ID    int
+	Rides []int
+
+	Arrival int
+	X       int
+	Y       int
+}
+
 func solve() {
 	fmt.Fprintf(output, "%d\n", C)
 }
