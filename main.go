@@ -31,6 +31,9 @@ func solve() {
 }
 
 func main() {
+	var pq prioq
+	pq.Add(Car{0, []int{}, 2, 0, 0})
+
 	sample := os.Args[1]
 	fileIn := sample + ".in"
 	fileOut := sample + ".out"
