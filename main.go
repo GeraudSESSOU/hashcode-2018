@@ -8,9 +8,22 @@ import (
 var input *os.File
 var output *os.File
 
-var A int
-var B int
+var R int
 var C int
+var F int
+var N int
+var B int
+var T int
+
+var Rides []Ride
+
+var Cars []*Car
+
+var Sched Scheduler
+
+type Ride struct {
+	a, b, x, y, s, f int
+}
 
 type Scheduler interface {
 	Add(Car)
@@ -26,7 +39,30 @@ type Car struct {
 	Y       int
 }
 
+func assign() bool {
+	c := sched.Pop()
+	r := Choose(c)
+	c.Update(r)
+	sched.Add(c)
+}
+
 func solve() {
+
+	// create cars
+	for i := 0; i < F; i++ {
+		c := &Car{
+			ID:      i,
+			Arrival: 0,
+			X:       0,
+			Y:       0,
+		}
+		Cars = append(Cars, c)
+		Sched.Add(c)
+	}
+
+	for assign() {
+	}
+
 	fmt.Fprintf(output, "%d\n", C)
 }
 
@@ -51,9 +87,23 @@ func main() {
 	defer output.Close()
 
 	// Global
-	A = readInt()
-	B = readInt()
+	R = readInt()
 	C = readInt()
+	F = readInt()
+	N = readInt()
+	B = readInt()
+	T = readInt()
+
+	for i := 0; i < N; i++ {
+		Rides = append(Rides, Ride{
+			a: readInt(),
+			b: readInt(),
+			x: readInt(),
+			y: readInt(),
+			s: readInt(),
+			f: readInt(),
+		})
+	}
 
 	solve()
 }
