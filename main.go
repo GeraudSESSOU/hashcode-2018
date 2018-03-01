@@ -47,6 +47,7 @@ func assign() bool {
 }
 
 func solve() {
+	Sched = prioq{}
 
 	// create cars
 	for i := 0; i < F; i++ {
@@ -67,9 +68,6 @@ func solve() {
 }
 
 func main() {
-	var pq prioq
-	pq.Add(Car{0, []int{}, 2, 0, 0})
-
 	sample := os.Args[1]
 	fileIn := sample + ".in"
 	fileOut := sample + ".out"
