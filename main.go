@@ -60,7 +60,7 @@ type ByEndtime []*Ride
 func (rs ByEndtime) Len() int      { return len(rs) }
 func (rs ByEndtime) Swap(i, j int) { rs[i], rs[j] = rs[j], rs[i] }
 func (rs ByEndtime) Less(i, j int) bool {
-	return rs[i].f < rs[j].f
+	return rs[i].f < rs[j].f || (rs[i].f == rs[j].f && rs[i].length() < rs[j].length())
 }
 
 type Scheduler interface {
