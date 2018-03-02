@@ -1,5 +1,12 @@
 # Hashcode 2018
 
+This is the solution from team _Gildas2000_:
+
+- [Aylin Kocoglu](https://github.com/AylinKocoglu)
+- Hélène Brulin
+- [Guillaume Koenig](https://github.com/guillaumekoenig)
+- [Gildas Chabot](https://github.com/gildasch)
+
 ## Score
 
 ![score](score.png)
